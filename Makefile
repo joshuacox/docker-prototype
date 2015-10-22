@@ -36,11 +36,11 @@ builddocker:
 	/usr/bin/time -v docker build -t `cat TAG` .
 
 kill:
-	@docker kill `cat cid`
+	-@docker kill `cat cid`
 
 rm-image:
-	@docker rm `cat cid`
-	@rm cid
+	-@docker rm `cat cid`
+	-@rm cid
 
 rm: kill rm-image
 
