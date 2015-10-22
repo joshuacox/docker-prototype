@@ -12,13 +12,13 @@ run: NAME TAG builddocker rundocker
 
 ## useful hints
 ## specifiy ports
-	#-p 44180:80 \
-	#-p 27005:27005/udp \
+#-p 44180:80 \
+#-p 27005:27005/udp \
 ## link another container
-	#--link some-mysql:mysql \
+#--link some-mysql:mysql \
 ## assign environmant variables
-	#--env STEAM_USERNAME=`cat steam_username` \
-	#--env STEAM_PASSWORD=`cat steam_password` \
+#--env STEAM_USERNAME=`cat steam_username` \
+#--env STEAM_PASSWORD=`cat steam_password` \
 
 rundocker:
 	$(eval TMP := $(shell mktemp -d --suffix=DOCKERTMP))
