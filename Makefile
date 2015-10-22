@@ -21,7 +21,7 @@ run: NAME TAG builddocker rundocker
 	#--env STEAM_PASSWORD=`cat steam_password` \
 
 rundocker:
-	$(eval TMP := $(shell mktemp -d --suffix=WHCFOUNDATION))
+	$(eval TMP := $(shell mktemp -d --suffix=DOCKERTMP))
 	chmod 777 $(TMP)
 	@docker run --name=`cat NAME` \
 	--cidfile="cid" \
