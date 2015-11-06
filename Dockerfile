@@ -16,4 +16,7 @@ RUN echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen
 RUN locale-gen
 ENV LANG en_US.UTF-8
 
+RUN apt-get -y autoremove
+RUN apt-get clean
+
 CMD ["/bin/bash"]
