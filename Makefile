@@ -1,3 +1,4 @@
+.PHONY: all help build run builddocker rundocker kill rm-image rm clean enter logs
 all: help
 
 help:
