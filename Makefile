@@ -5,10 +5,14 @@ help:
 	@echo "-- Help Menu"
 	@echo ""  This is merely a base image for usage read the README file
 	@echo ""   1. make run       - build and run docker container
+	@echo ""   2. make build     - build docker container
+	@echo ""   3. make clean     - kill and remove docker container
+	@echo ""   4. make enter     - execute an interactive bash in docker container
+	@echo ""   3. make logs      - follow the logs of docker container
 
-build: builddocker
+build: NAME TAG builddocker
 
-run: NAME TAG builddocker rundocker
+run: build rundocker
 
 ## useful hints
 ## specifiy ports
@@ -44,7 +48,7 @@ rm-image:
 
 rm: kill rm-image
 
-clean: cleanfiles rm
+clean: rm
 
 enter:
 	docker exec -i -t `cat cid` /bin/bash
