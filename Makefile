@@ -1,4 +1,10 @@
 .PHONY: all help build run builddocker rundocker kill rm-image rm clean enter logs
+
+user = $(shell whoami)
+ifeq ($(user),root)
+$(error  "do not run as root! run 'gpasswd -a USER docker' on the user of your choice")
+endif
+
 all: help
 
 help:
@@ -27,15 +33,17 @@ run: build rundocker
 
 rundocker:
 	$(eval TMP := $(shell mktemp -d --suffix=DOCKERTMP))
+	$(eval NAME := $(shell cat NAME))
+	$(eval TAG := $(shell cat TAG))
 	chmod 777 $(TMP)
-	@docker run --name=`cat NAME` \
+	@docker run --name=$(NAME) \
 	--cidfile="cid" \
 	-v $(TMP):/tmp \
 	-d \
 	-P \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
-	-t `cat TAG`
+	-t $(TAG)
 
 builddocker:
 	/usr/bin/time -v docker build -t `cat TAG` .
@@ -64,5 +72,5 @@ NAME:
 
 TAG:
 	@while [ -z "$$TAG" ]; do \
-		read -r -p "Enter the name you wish to associate with this container [TAG]: " TAG; echo "$$TAG">>TAG; cat TAG; \
+		read -r -p "Enter the tag you wish to associate with this container [TAG]: " TAG; echo "$$TAG">>TAG; cat TAG; \
 	done ;
