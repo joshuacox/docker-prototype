@@ -31,6 +31,14 @@ run: build rundocker
 #--env STEAM_USERNAME=`cat steam_username` \
 #--env STEAM_PASSWORD=`cat steam_password` \
 
+# change uid in the container for easy dev work
+# first you need to determin your user:
+# $(eval UID := $(shell id -u))
+# then you need to insert this as a env var:
+# -e "DOCKER_UID=$(UID)" \
+# then look at chguid.sh for an example of 
+# what needs to be run in the live container upon startup
+
 rundocker:
 	$(eval TMP := $(shell mktemp -d --suffix=DOCKERTMP))
 	$(eval NAME := $(shell cat NAME))
