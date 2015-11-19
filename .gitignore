@@ -1,6 +1,6 @@
 cid
 mysqlcid
-mysqlbare
+mysqltemp
 datadir
 APACHE_DATADIR
 MYSQL_DATADIR
