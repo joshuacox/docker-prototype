@@ -23,7 +23,7 @@ build: NAME TAG builddocker
 run: build rundocker
 
 # run a  container that requires mysql temporarily
-runmysqltemp: MYSQL_PASS rm build mysqltemp rundocker
+temp: MYSQL_PASS rm build mysqltemp runmysqltemp
 
 # run a  container that requires mysql in production with persistent data
 # HINT: use the grabmysqldatadir recipe to grab the data directory automatically from the above runmysqltemp
@@ -71,7 +71,7 @@ runmysqltemp:
 	-v $(TMP):/tmp \
 	-d \
 	-P \
-	--link `cat NAME`-mysqlbare:mysql \
+	--link `cat NAME`-mysqltemp:mysql \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
 	-t $(TAG)
@@ -165,18 +165,20 @@ mysqltemp-rmkill:
 	-@docker rm `cat mysqltemp`
 	-@rm mysqltemp
 
+rmall: rm rmmysqltemp rmmysql
+
 grab: grabapachedir grabmysqldatadir
 
 grabmysqldatadir:
 	-mkdir -p datadir
-	docker cp `cat mysqlbare`:/var/lib/mysql datadir/
+	docker cp `cat mysqltemp`:/var/lib/mysql datadir/
 	sudo chown -R $(user). datadir/mysql
 	echo `pwd`/datadir/mysql > MYSQL_DATADIR
 
 grabapachedir:
 	-mkdir -p datadir
 	docker cp `cat cid`:/var/www/html datadir/
-	sudo chown -R $(user). datadir/mysql
+	sudo chown -R $(user). datadir/html
 	echo `pwd`/datadir/html > APACHE_DATADIR
 
 APACHE_DATADIR:
