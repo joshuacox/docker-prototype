@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM local-jessie
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DOCKER_PROTOTYPE 20150531

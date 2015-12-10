@@ -29,6 +29,9 @@ temp: MYSQL_PASS rm build mysqltemp runmysqltemp
 # HINT: use the grabmysqldatadir recipe to grab the data directory automatically from the above runmysqltemp
 prod: APACHE_DATADIR MYSQL_DATADIR MYSQL_PASS rm build mysqlcid runprod
 
+jessie:
+	sudo bash local-jessie.sh
+
 ## useful hints
 ## specifiy ports
 #-p 44180:80 \
