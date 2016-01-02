@@ -174,14 +174,12 @@ grab: grabapachedir grabmysqldatadir
 
 grabmysqldatadir:
 	-mkdir -p datadir
-	docker cp `cat mysqltemp`:/var/lib/mysql datadir/
-	sudo chown -R $(user). datadir/mysql
+	docker cp `cat mysqltemp`:/var/lib/mysql  - |sudo tar -C datadir/ -pxvf -
 	echo `pwd`/datadir/mysql > MYSQL_DATADIR
 
 grabapachedir:
 	-mkdir -p datadir
-	docker cp `cat cid`:/var/www/html datadir/
-	sudo chown -R $(user). datadir/html
+	docker cp `cat cid`:/var/www/html  - |sudo tar -C datadir/ -pxvf -
 	echo `pwd`/datadir/html > APACHE_DATADIR
 
 APACHE_DATADIR:
@@ -198,4 +196,3 @@ MYSQL_PASS:
 	@while [ -z "$$MYSQL_PASS" ]; do \
 		read -r -p "Enter the MySQL password you wish to associate with this container [MYSQL_PASS]: " MYSQL_PASS; echo "$$MYSQL_PASS">>MYSQL_PASS; cat MYSQL_PASS; \
 	done ;
-
